@@ -174,6 +174,25 @@ const App = () => {
                     )}
 
                     <form onSubmit={handleSearch} className="relative group">
+                        <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-skku-green transition-colors">
+                            <Search size={20} />
+                        </div>
+                        <input
+                            type="text"
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            placeholder="검색어 입력..."
+                            className="w-full h-14 md:h-16 pl-14 pr-24 bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-100/60 focus:outline-none focus:border-skku-green/40 focus:ring-4 focus:ring-skku-green/5 transition-all text-base md:text-lg font-medium placeholder:text-slate-300"
+                        />
+                        <motion.button
+                            type="submit"
+                            disabled={isLoading}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="absolute inset-y-1.5 right-1.5 px-6 bg-skku-green text-white rounded-xl font-bold flex items-center gap-2 hover:bg-skku-dark-green transition-all disabled:opacity-50"
+                        >
+                            {isLoading ? <Loader2 className="animate-spin" size={18} /> : <span>검색</span>}
+                        </motion.button>
                     </form>
                 </section>
 
