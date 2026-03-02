@@ -119,34 +119,11 @@ const App = () => {
             <main className="max-w-3xl mx-auto px-5 pt-8 md:pt-14">
                 {/* Search Bar Section */}
                 <section className="mb-8">
-
-                    <form onSubmit={handleSearch} className="relative group">
-                        <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-skku-green transition-colors">
-                            <Search size={20} />
-                        </div>
-                        <input
-                            type="text"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            placeholder="검색어 입력..."
-                            className="w-full h-14 md:h-16 pl-14 pr-24 bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-100/60 focus:outline-none focus:border-skku-green/40 focus:ring-4 focus:ring-skku-green/5 transition-all text-base md:text-lg font-medium placeholder:text-slate-300"
-                        />
-                        <motion.button
-                            type="submit"
-                            disabled={isLoading}
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="absolute inset-y-1.5 right-1.5 px-6 bg-skku-green text-white rounded-xl font-bold flex items-center gap-2 hover:bg-skku-dark-green transition-all disabled:opacity-50"
-                        >
-                            {isLoading ? <Loader2 className="animate-spin" size={18} /> : <span>검색</span>}
-                        </motion.button>
-                    </form>
-
                     {!isLoading && Object.keys(results).length === 0 && !error && (
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="mt-6 mb-10 overflow-hidden relative"
+                            className="mb-8 overflow-hidden relative"
                         >
                             <div className="absolute top-0 right-0 -mt-2 -mr-2 w-24 h-24 bg-skku-green/5 rounded-full blur-3xl pointer-events-none" />
                             <div className="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm relative overflow-hidden group hover:shadow-md transition-shadow">
@@ -180,16 +157,60 @@ const App = () => {
                                 <div className="bg-slate-50/50 rounded-2xl p-4 border border-dashed border-slate-200 min-h-[80px] flex items-center justify-center">
                                     {isMenuLoading ? (
                                         <Loader2 className="animate-spin text-slate-200" size={20} />
-                                    ) : (
-                                        <p className={`text-sm font-bold leading-relaxed w-full text-center whitespace-pre-line ${menu === '미운영' ? 'text-slate-300 italic' : 'text-slate-600'}`}>
-                                            {menu}
+                                    ) : menu === '미운영' ? (
+                                        <p className="text-sm font-bold leading-relaxed w-full text-center text-slate-300 italic">
+                                            이날은 휴무이거나 식단이 없습니다.
                                         </p>
+                                    ) : (
+                                        <div className="text-sm font-bold leading-relaxed w-full text-center text-slate-600 space-y-1">
+                                            {(() => {
+                                                const now = new Date();
+                                                const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+                                                const today = new Date(utc + (3600000 * 9));
+                                                today.setHours(0, 0, 0, 0);
+
+                                                const compare = new Date(currentDate);
+                                                compare.setHours(0, 0, 0, 0);
+
+                                                const diffDays = Math.round((compare.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+
+                                                let prefix = "";
+                                                let suffix = "";
+
+                                                if (diffDays === 0) {
+                                                    prefix = "오늘은 ";
+                                                    suffix = " 먹어보자~";
+                                                } else if (diffDays === 1) {
+                                                    prefix = "내일 아침은 ";
+                                                    suffix = " 어때?";
+                                                } else if (diffDays === -1) {
+                                                    prefix = "어제는 ";
+                                                    suffix = " 메뉴였네!";
+                                                } else if (diffDays > 1) {
+                                                    prefix = "넌 ";
+                                                    suffix = " 좋아해?";
+                                                } else {
+                                                    prefix = "이날은 ";
+                                                    suffix = " 메뉴가 나왔었네.";
+                                                }
+
+                                                return (
+                                                    <p>
+                                                        {prefix}
+                                                        <span className="text-[#ff2e63] font-black underline decoration-2 underline-offset-4 decoration-[#ff2e63]/30 px-1">{menu}</span>
+                                                        {suffix}
+                                                    </p>
+                                                );
+                                            })()}
+                                        </div>
                                     )}
                                 </div>
                             </div>
-
                         </motion.div>
                     )}
+
+                    <form onSubmit={handleSearch} className="relative group">
+                    </form>
                 </section>
 
 
