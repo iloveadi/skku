@@ -1,0 +1,1 @@
+{"name":"통합검색서비스 for YJ","short_name":"SKKU Search","description":"성균관대학교 통합검색 스마트 셔틀/검색 서비스","start_url":"/skku/","display":"standalone","background_color":"#ffffff","theme_color":"#006334","lang":"en","scope":"/skku/","icons":[{"src":"logo.png","sizes":"192x192","type":"image/png"},{"src":"logo.png","sizes":"512x512","type":"image/png"}]}
