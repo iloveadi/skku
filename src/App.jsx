@@ -162,46 +162,10 @@ const App = () => {
                                             이날은 휴무이거나 식단이 없습니다.
                                         </p>
                                     ) : (
-                                        <div className="text-sm font-bold leading-relaxed w-full text-center text-slate-600 space-y-1">
-                                            {(() => {
-                                                const now = new Date();
-                                                const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-                                                const today = new Date(utc + (3600000 * 9));
-                                                today.setHours(0, 0, 0, 0);
-
-                                                const compare = new Date(currentDate);
-                                                compare.setHours(0, 0, 0, 0);
-
-                                                const diffDays = Math.round((compare.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-
-                                                let prefix = "";
-                                                let suffix = "";
-
-                                                if (diffDays === 0) {
-                                                    prefix = "오늘은 ";
-                                                    suffix = " 먹어보자~";
-                                                } else if (diffDays === 1) {
-                                                    prefix = "내일 아침은 ";
-                                                    suffix = " 어때?";
-                                                } else if (diffDays === -1) {
-                                                    prefix = "어제는 ";
-                                                    suffix = " 메뉴였네!";
-                                                } else if (diffDays > 1) {
-                                                    prefix = "넌 ";
-                                                    suffix = " 좋아해?";
-                                                } else {
-                                                    prefix = "이날은 ";
-                                                    suffix = " 메뉴가 나왔었네.";
-                                                }
-
-                                                return (
-                                                    <p>
-                                                        {prefix}
-                                                        <span className="text-[#ff2e63] font-black underline decoration-2 underline-offset-4 decoration-[#ff2e63]/30 px-1">{menu}</span>
-                                                        {suffix}
-                                                    </p>
-                                                );
-                                            })()}
+                                        <div className="text-base font-black leading-relaxed w-full text-center py-2">
+                                            <span className="text-[#ff2e63] underline decoration-2 underline-offset-4 decoration-[#ff2e63]/30 px-1">
+                                                {menu}
+                                            </span>
                                         </div>
                                     )}
                                 </div>
